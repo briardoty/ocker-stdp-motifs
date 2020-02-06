@@ -5,7 +5,7 @@
 %mex -I/usr/local/include -lgsl sims2.c;
 
 %mex -I/usr/local/include -lgsl -g CFLAGS="\$CFLAGS -std=c99" sims2.c;
-mex -g CFLAGS="\$CFLAGS -std=c99" sims.c;
+mex -g COMPFLAGS="\$CFLAGS -std=c99" sims.c;
 
 dt=.1; %ms
 dt_ds=.5; %ms for spk train statistics
@@ -33,9 +33,9 @@ R=1; % realizations per adjacency matrix
 tstop
 R
 
-if matlabpool('size')==0 && R>1
-	matlabpool open; %initialize cluster
-end
+% if parpool('size')==0 && R>1
+% 	parpool open; %initialize cluster
+% end
 
 c=0
 w=0;
@@ -115,7 +115,7 @@ for net = 1:N_net
     params_st{net} = params;
     r_count = 0;
 
-   parfor r=1:R %realizations
+   for r=1:R %realizations
         
         % disp(r)
         tic
@@ -191,9 +191,9 @@ end % networks
 
 toc
 
-if matlabpool('size') ~= 0
-    matlabpool close
-end
+% if parpool('size') ~= 0
+%     parpool close
+% end
     
 % clear spk_pad, clear ind1, clear ind2, clear spk1_tmp, clear spk2_tmp
 % if c == 0

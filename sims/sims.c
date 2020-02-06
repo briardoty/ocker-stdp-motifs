@@ -194,8 +194,8 @@ void mexFunction(int nlhs, mxArray *plhs[],
 //     double Conn[N][N], Conn0[N][N], taus[N];
 //     double num_spikes[N];
     
-    int indw2[3] = {0,0,0};
-    int dims[3] = {N,N,Tloopw};
+    mwSize indw2[3] = {0,0,0};
+    const mwSize dims[3] = {N,N,Tloopw};
     
 //     mexPrintf("%d\n",Tloopw);
     
@@ -271,7 +271,9 @@ void mexFunction(int nlhs, mxArray *plhs[],
             
             xi_c = cc*D_vec[ne]*xi_c_tmp[i];
             xi = ci*D_vec[ne]*gasdev(&idum);
-            V[ne]  =  V0[ne]+(dt/C)*(gL*(VL-V0[ne])+mu_vec[ne]+Isyn[ne]+gL*Delta*EXP((V0[ne]-VT)/Delta))+(sqrtdt/C)*(xi_c+xi);
+			
+			// V_i = V_i + dt/C * (leak + ??? + I_ext + )
+            V[ne]  =  V0[ne] + (dt/C)*(gL*(VL-V0[ne]) + mu_vec[ne] + Isyn[ne] + gL*Delta*EXP((V0[ne]-VT)/Delta)) + (sqrtdt/C)*(xi_c+xi);
 
             if (t-tlast[ne] < tref) {
                 V[ne]  =  Vth-(t-tlast[ne])/tref*(Vth-Vr); // linear spike shape from threshold to reset
