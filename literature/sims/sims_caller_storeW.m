@@ -73,7 +73,7 @@ for net = 1:N_net
     
     net
     R_count = R;
-    %     par_net;
+    par_net;
     % params file for mex
     params = zeros(35,1);
     params(1) = gL;
