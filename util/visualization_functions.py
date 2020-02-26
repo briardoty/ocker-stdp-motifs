@@ -20,10 +20,6 @@ def visualise_connectivity(S):
     xlabel('Source neuron index')
     ylabel('Target neuron index')
     
-    scatter(S.x_pre/um, S.x_post/um, S.w*20)
-    xlabel('Source neuron position (um)')
-    ylabel('Target neuron position (um)');
-    
 def visualize_stdp(A_pre, tau_pre, A_post, tau_post):
     delta_t = linspace(-100, 100, 100)*ms
     W = where(delta_t>0, A_pre*exp(-delta_t/tau_pre), A_post*exp(delta_t/tau_post))
