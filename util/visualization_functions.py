@@ -14,7 +14,7 @@ def visualise_connectivity(S):
     xlim(-0.1, 1.1)
     ylim(-1, max(Ns, Nt))
     subplot(122)
-    plot(S.i, S.j, 'ok')
+    plot(S.i, S.j, '.k')
     xlim(-1, Ns)
     ylim(-1, Nt)
     xlabel('Source neuron index')
