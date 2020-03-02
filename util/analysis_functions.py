@@ -3,7 +3,7 @@ import numpy as np
 
 def compute_motif_stats(network_group, synapses):
     """
-
+    
     """
     # Create a matrix to store the weights and fill it with NaN
     N = len(network_group)
