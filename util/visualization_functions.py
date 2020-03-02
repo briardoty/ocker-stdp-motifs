@@ -26,4 +26,28 @@ def visualize_stdp(A_pre, tau_pre, A_post, tau_post):
     plot(delta_t/ms, W)
     xlabel(r'$\Delta t$ (ms)')
     ylabel('W')
-    axhline(0, ls='-', c='k');
+    axhline(0, ls='-', c='k')
+
+def plot_v(v_mon, sp_mon_exc, i, include_spikes=False):
+    """
+
+    """
+
+    plt.figure(figsize=(10, 5))
+    plot(v_mon.t/ms, v_mon.v[i]/mV)
+
+    xlabel('Time (ms)')
+    ylabel('mV')
+
+    if (not include_spikes):
+        return
+
+    n_i_spike_train = sp_mon_exc.spike_trains()[i]
+    for t in n_i_spike_train:
+        axvline(t/ms, ls='--', c='C1', lw=3)
+
+def plot_spike_trains(sp_mon_exc):
+    plt.figure(figsize=(10, 5))
+    plot(sp_mon_exc.t/ms, sp_mon_exc.i, '|r')
+    xlabel('Time (ms)')
+    ylabel('Neuron')
