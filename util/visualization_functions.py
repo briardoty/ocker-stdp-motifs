@@ -30,7 +30,7 @@ def visualize_stdp(A_pre, tau_pre, A_post, tau_post):
 
 def plot_v(v_mon, sp_mon_exc, i, include_spikes=False):
     """
-
+    Plot voltage trace for the given neuron with optional spikes
     """
 
     plt.figure(figsize=(10, 5))
@@ -47,6 +47,9 @@ def plot_v(v_mon, sp_mon_exc, i, include_spikes=False):
         axvline(t/ms, ls='--', c='C1', lw=3)
 
 def plot_spike_trains(sp_mon_exc):
+    """
+    Plot spike trains for all neurons in given monitor
+    """
     plt.figure(figsize=(10, 5))
     plot(sp_mon_exc.t/ms, sp_mon_exc.i, '|r')
     xlabel('Time (ms)')
