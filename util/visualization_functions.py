@@ -1,4 +1,5 @@
 from brian2 import *
+from util.analysis_functions import *
 
 def visualise_connectivity(S):
     Ns = len(S.source)
@@ -75,16 +76,19 @@ def plot_avg_syn_weight(w_mon, w_max):
     ylabel('Average Weight / gmax')
     plt.show()
 
-def plot_motif_dynamics(w_mon):
+def plot_motif_dynamics(w_mon, synapses, N):
     """
     Plot motif dynamics a la figure 7 from Ocker et al 2015
     Args:
         w_mon (StateMonitor): Brian2 synaptic weight monitor
+        synapses (Synapses): Brian2 synapses in network
+        N (int): number of neurons
     """
-    t = np.linspace(0, len(w_mon.t), 100, True, False, int)
+    motif_stats_mat = get_motif_stats_in_time(w_mon, synapses, 100, N)
 
-    motif_stats = np.zeros(())
+    fig, axes = plt.subplots(5, figsize=(5, 10))
 
-
-    return
+    for i in range(5):
+        ax = axes[i]
+        ax.plot(motif_stats_mat[:, i])
 

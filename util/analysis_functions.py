@@ -46,12 +46,16 @@ def get_motif_stats_in_time(w_mon, synapses, n_samples, N):
         n_samples (int): number of time samples to take motif stats at
         N (int): number of neurons
     Returns:
-        motif_stats_arr (array): array of motif_stats tuples
+        motif_stats_mat (n_samples x 5): matrix of motif_stats
     """
     t_i_arr = np.linspace(0, len(w_mon.t)-1, n_samples, True, False, int)
 
     W = np.zeros((N, N, n_samples))
     W[synapses.i[:], synapses.j[:], :] = w_mon.w[:,t_i_arr]
 
-    motif_stats_arr = [compute_motif_stats_from_matrix(W[:,:,i], N) for i in range(len(t_i_arr))]
-    return motif_stats_arr
+    motif_stats_mat = np.zeros((len(t_i_arr), 5))
+
+    for i in range(len(t_i_arr)):
+        motif_stats_mat[i,:] = compute_motif_stats_from_matrix(W[:,:,i], N)
+
+    return motif_stats_mat
