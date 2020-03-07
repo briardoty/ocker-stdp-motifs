@@ -31,8 +31,12 @@ def visualize_stdp(A_pre, tau_pre, A_post, tau_post):
 def plot_v(v_mon, sp_mon_exc, i, include_spikes=False):
     """
     Plot voltage trace for the given neuron with optional spikes
+    Args:
+        v_mon: Brian2 voltage monitor
+        sp_mon_exc: Brian2 neuron spike monitor for excitatory neurons
+        i (int): neuron index
+        include_spikes (bool): optional param to plot spike times
     """
-
     plt.figure(figsize=(10, 5))
     plot(v_mon.t/ms, v_mon.v[i]/mV)
 
@@ -49,8 +53,33 @@ def plot_v(v_mon, sp_mon_exc, i, include_spikes=False):
 def plot_spike_trains(sp_mon_exc):
     """
     Plot spike trains for all neurons in given monitor
+    Args:
+        sp_mon_exc: Brian2 neuron spike monitor for excitatory neurons
     """
     plt.figure(figsize=(10, 5))
     plot(sp_mon_exc.t/ms, sp_mon_exc.i, '|r')
     xlabel('Time (ms)')
     ylabel('Neuron')
+
+def plot_avg_syn_weight(w_mon, w_max):
+    """
+    Plot average synaptic weight over time
+    Args:
+        w_mon: Brian2 synaptic weight monitor
+        w_max (number): max synaptic weight per STDP rule
+    """
+    avg_w_e = w_mon.w.mean(axis=0)
+    plot(w_mon.t/second, avg_w_e/w_max)
+    title('Excitatory Neuron Average Weight')
+    xlabel('Time (s)')
+    ylabel('Average Weight / gmax')
+    plt.show()
+
+def plot_motif_dynamics(w_mon):
+    """
+    Plot motif dynamics a la figure 7 from Ocker et al 2015
+    Args:
+        w_mon: Brian2 synaptic weight monitor
+    """
+    return
+
