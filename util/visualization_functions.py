@@ -84,11 +84,14 @@ def plot_motif_dynamics(w_mon, synapses, N):
         synapses (Synapses): Brian2 synapses in network
         N (int): number of neurons
     """
-    motif_stats_mat = get_motif_stats_in_time(w_mon, synapses, 100, N)
+    motif_names = ["p", "q_div", "q_con", "q_ch", "q_rec"]
+    motif_stats_mat = get_motif_stats_in_time(w_mon, synapses, N)
 
     fig, axes = plt.subplots(5, figsize=(5, 10))
 
+    plt.xlabel("Time (s)")
     for i in range(5):
         ax = axes[i]
-        ax.plot(motif_stats_mat[:, i])
+        ax.plot(w_mon.t, motif_stats_mat[:, i])
+        ax.set_ylabel(motif_names[i])
 
