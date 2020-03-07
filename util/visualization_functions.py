@@ -32,7 +32,7 @@ def plot_v(v_mon, sp_mon_exc, i, include_spikes=False):
     """
     Plot voltage trace for the given neuron with optional spikes
     Args:
-        v_mon: Brian2 voltage monitor
+        v_mon (StateMonitor): Brian2 voltage monitor
         sp_mon_exc: Brian2 neuron spike monitor for excitatory neurons
         i (int): neuron index
         include_spikes (bool): optional param to plot spike times
@@ -65,7 +65,7 @@ def plot_avg_syn_weight(w_mon, w_max):
     """
     Plot average synaptic weight over time
     Args:
-        w_mon: Brian2 synaptic weight monitor
+        w_mon (StateMonitor): Brian2 synaptic weight monitor
         w_max (number): max synaptic weight per STDP rule
     """
     avg_w_e = w_mon.w.mean(axis=0)
@@ -79,7 +79,12 @@ def plot_motif_dynamics(w_mon):
     """
     Plot motif dynamics a la figure 7 from Ocker et al 2015
     Args:
-        w_mon: Brian2 synaptic weight monitor
+        w_mon (StateMonitor): Brian2 synaptic weight monitor
     """
+    t = np.linspace(0, len(w_mon.t), 100, True, False, int)
+
+    motif_stats = np.zeros(())
+
+
     return
 
