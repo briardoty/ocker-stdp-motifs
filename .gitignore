@@ -1,2 +1,8 @@
 # ignore c++ output
 **/output
+
+# ignore vscode files
+**/.vscode
+
+# jupyter notebook checkpoints
+**/.ipynb_checkpoints
