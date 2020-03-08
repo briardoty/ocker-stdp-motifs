@@ -76,13 +76,14 @@ def plot_avg_syn_weight(w_mon, w_max):
     ylabel('Average Weight / gmax')
     plt.show()
 
-def plot_motif_dynamics(w_mon, synapses, N):
+def plot_motif_dynamics(w_mon, synapses, N, save_fig=False):
     """
     Plot motif dynamics a la figure 7 from Ocker et al 2015
     Args:
         w_mon (StateMonitor): Brian2 synaptic weight monitor
         synapses (Synapses): Brian2 synapses in network
         N (int): number of neurons
+        save_fig (bool): optional flag to output figure image
     """
     motif_names = ["p", "q_div", "q_con", "q_ch", "q_rec"]
     motif_stats_mat = get_motif_stats_in_time(w_mon, synapses, N)
@@ -94,4 +95,11 @@ def plot_motif_dynamics(w_mon, synapses, N):
         ax = axes[i]
         ax.plot(w_mon.t, motif_stats_mat[:, i])
         ax.set_ylabel(motif_names[i])
+
+    if not save_fig:
+        return
+
+    now = str(time.time())
+    name = "results/motifs_N=" + str(N) + "_t=" + str(w_mon.t[-1]) + "_" + now + ".png"
+    plt.savefig(name, dpi=300, bbox_inches='tight')
 
