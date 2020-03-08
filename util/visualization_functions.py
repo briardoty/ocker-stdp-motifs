@@ -91,6 +91,7 @@ def plot_motif_dynamics(w_mon, synapses, N, save_fig=False):
     fig, axes = plt.subplots(5, figsize=(5, 10))
 
     plt.xlabel("Time (s)")
+    fig.suptitle("Motif dynamics: N=" + str(N))
     for i in range(5):
         ax = axes[i]
         ax.plot(w_mon.t, motif_stats_mat[:, i])
