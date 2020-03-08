@@ -48,12 +48,10 @@ def compute_p0(network_group, synapses):
     """
     # Create a matrix to store the weights
     N = len(network_group)
-    W = np.zeros((N, N))
+    adj = np.zeros((N, N))
 
     # Insert the values from the Synapses object
-    W[synapses.i[:], synapses.j[:]] = synapses.w[:]
-
-    adj = np.where(W > 0, 1, 0)
+    adj[synapses.i[:], synapses.j[:]] = 1
     p0 = sum(adj) / N**2
 
     return p0
