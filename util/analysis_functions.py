@@ -28,7 +28,7 @@ def compute_motif_stats(network_group, synapses):
     Returns:
         motif_stats: 5-tuple of motif stats like (p, q_div, q_con, q_ch, q_rec)
     """
-    # Create a matrix to store the weights and fill it with NaN
+    # Create a matrix to store the weights
     N = len(network_group)
     W = np.zeros((N, N))
 
@@ -36,6 +36,27 @@ def compute_motif_stats(network_group, synapses):
     W[synapses.i[:], synapses.j[:]] = synapses.w[:]
 
     return compute_motif_stats_from_matrix(W, N)
+
+def compute_p0(network_group, synapses):
+    """
+    Compute initial connection density of network
+    Args:
+        network_group (NeuronGroup): Brian2 neurons in network
+        synapses (Synapses): Brian2 synapses in network
+    Returns:
+        p0 (number): initial connection density
+    """
+    # Create a matrix to store the weights
+    N = len(network_group)
+    W = np.zeros((N, N))
+
+    # Insert the values from the Synapses object
+    W[synapses.i[:], synapses.j[:]] = synapses.w[:]
+
+    adj = np.where(W > 0, 1, 0)
+    p0 = sum(adj) / N**2
+
+    return p0
 
 def get_motif_stats_in_time(w_mon, synapses, N):
     """
