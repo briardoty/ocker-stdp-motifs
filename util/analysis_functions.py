@@ -75,3 +75,27 @@ def get_motif_stats_in_time(w_mon, synapses, N):
         motif_stats_mat[i,:] = compute_motif_stats_from_matrix(W[:,:,i], N)
 
     return motif_stats_mat
+
+def get_motif_stats_in_time2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh):
+    """
+    Computes motif statistics at 
+    Args:
+        w_mon (StateMonitor): Brian2 synaptic weight monitor
+        synapses (Synapses): Brian2 synapses in network
+        N (int): number of neurons
+    Returns:
+        motif_stats_mat (len(w_mon.t) x 5): matrix of motif_stats
+    """
+    N = N_exc + N_inh
+    len_t = max(len(w_mon_exc.t), len(w_mon_inh.t))
+    
+    W = np.zeros((N, N, len_t))
+    W[synapses_exc.i[:], synapses_exc.j[:], :] = w_mon_exc.w[:,:]
+    W[synapses_inh.i[:] + N_exc, synapses_inh.j[:], :] = w_mon_inh.w[:,:]
+
+    motif_stats_mat = np.zeros((len_t, 5))
+
+    for i in range(len_t):
+        motif_stats_mat[i,:] = compute_motif_stats_from_matrix(W[:,:,i], N)
+
+    return motif_stats_mat
