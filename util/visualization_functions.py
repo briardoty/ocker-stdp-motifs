@@ -145,7 +145,7 @@ def plot_all_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N
 "q_ch_IEE", "q_ch_EIE", "q_ch_EEI", "q_rec_EE", "q_rec_EI"]
     motif_stats_mat = get_all_motif_stats_in_time2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh)
 
-    fig, axes = plt.subplots(14, figsize=(5, 10))
+    fig, axes = plt.subplots(14, figsize=(5, 20))
 
     plt.xlabel("Time (s)")
     fig.suptitle("Motif dynamics: N_exc=" + str(N_exc) + "; N_inh=" + str(N_inh))
