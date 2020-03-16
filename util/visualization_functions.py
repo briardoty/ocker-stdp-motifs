@@ -76,7 +76,7 @@ def plot_avg_syn_weight(w_mon, w_max):
     ylabel('Average Weight / gmax')
     plt.show()
 
-def plot_motif_dynamics(w_mon, synapses, N, save_fig=False):
+def plot_motif_dynamics(w_mon, synapses, N, use_p0=True, save_fig=False):
     """
     Plot motif dynamics a la figure 7 from Ocker et al 2015
     Args:
@@ -86,7 +86,7 @@ def plot_motif_dynamics(w_mon, synapses, N, save_fig=False):
         save_fig (bool): optional flag to output figure image
     """
     motif_names = ["p", "q_div", "q_con", "q_ch", "q_rec"]
-    motif_stats_mat = get_motif_stats_in_time(w_mon, synapses, N)
+    motif_stats_mat = get_motif_stats_in_time(w_mon, synapses, N, use_p0=use_p0)
 
     fig, axes = plt.subplots(5, figsize=(5, 10))
 
@@ -104,7 +104,7 @@ def plot_motif_dynamics(w_mon, synapses, N, save_fig=False):
     name = "results/motifs_N=" + str(N) + "_t=" + str(w_mon.t[-1]) + "_" + now + ".png"
     plt.savefig(name, dpi=300, bbox_inches='tight')
 
-def plot_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh, save_fig=False):
+def plot_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh, use_p0=True, save_fig=False):
     """
     Plot motif dynamics a la figure 7 from Ocker et al 2015
     Args:
@@ -114,7 +114,7 @@ def plot_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc
         save_fig (bool): optional flag to output figure image
     """
     motif_names = ["p", "q_div", "q_con", "q_ch", "q_rec"]
-    motif_stats_mat = get_motif_stats_in_time2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh)
+    motif_stats_mat = get_motif_stats_in_time2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh, use_p0=use_p0)
 
     fig, axes = plt.subplots(5, figsize=(5, 10))
 
@@ -132,7 +132,7 @@ def plot_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc
     name = "results/motifs_N_exc=" + str(N_exc) + "_N_inh=" + str(N_inh) + "_t=" + str(w_mon_exc.t[-1]) + "_" + now + ".png"
     plt.savefig(name, dpi=300, bbox_inches='tight')
     
-def plot_all_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh, save_fig=False):
+def plot_all_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh, use_p0=True, save_fig=False):
     """
     Plot motif dynamics a la figure 7 from Ocker et al 2015
     Args:
@@ -141,15 +141,15 @@ def plot_all_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N
         N (int): number of neurons
         save_fig (bool): optional flag to output figure image
     """
-    motif_names = ["p_EE", "p_EI", "q_div_EE", "q_div_IEI", "q_div_EEI", "q_con_EE", "q_con_EIE", "q_con_EEI", "q_ch_EE",
+    motif_names = ["-p**2", "p_EE", "p_EI", "q_div_EE", "q_div_IEI", "q_div_EEI", "q_con_EE", "q_con_EIE", "q_con_EEI", "q_ch_EE",
 "q_ch_IEE", "q_ch_EIE", "q_ch_EEI", "q_rec_EE", "q_rec_EI"]
-    motif_stats_mat = get_all_motif_stats_in_time2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh)
+    motif_stats_mat = get_all_motif_stats_in_time2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh, use_p0=use_p0)
 
-    fig, axes = plt.subplots(14, figsize=(5, 20))
+    fig, axes = plt.subplots(15, figsize=(5, 20))
 
     plt.xlabel("Time (s)")
     fig.suptitle("Motif dynamics: N_exc=" + str(N_exc) + "; N_inh=" + str(N_inh))
-    for i in range(14):
+    for i in range(15):
         ax = axes[i]
         ax.plot(w_mon_exc.t, motif_stats_mat[:, i])
         ax.set_ylabel(motif_names[i])
