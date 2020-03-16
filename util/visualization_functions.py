@@ -131,3 +131,32 @@ def plot_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc
     now = str(time.time())
     name = "results/motifs_N_exc=" + str(N_exc) + "_N_inh=" + str(N_inh) + "_t=" + str(w_mon_exc.t[-1]) + "_" + now + ".png"
     plt.savefig(name, dpi=300, bbox_inches='tight')
+    
+def plot_all_motif_dynamics2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh, save_fig=False):
+    """
+    Plot motif dynamics a la figure 7 from Ocker et al 2015
+    Args:
+        w_mon (StateMonitor): Brian2 synaptic weight monitor
+        synapses (Synapses): Brian2 synapses in network
+        N (int): number of neurons
+        save_fig (bool): optional flag to output figure image
+    """
+    motif_names = ["p_EE", "p_EI", "q_div_EE", "q_div_IEI", "q_div_EEI", "q_con_EE", "q_con_EIE", "q_con_EEI", "q_ch_EE",
+"q_ch_IEE", "q_ch_EIE", "q_ch_EEI", "q_rec_EE", "q_rec_EI"]
+    motif_stats_mat = get_all_motif_stats_in_time2(w_mon_exc, w_mon_inh, synapses_exc, synapses_inh, N_exc, N_inh)
+
+    fig, axes = plt.subplots(14, figsize=(5, 10))
+
+    plt.xlabel("Time (s)")
+    fig.suptitle("Motif dynamics: N_exc=" + str(N_exc) + "; N_inh=" + str(N_inh))
+    for i in range(14):
+        ax = axes[i]
+        ax.plot(w_mon_exc.t, motif_stats_mat[:, i])
+        ax.set_ylabel(motif_names[i])
+
+    if not save_fig:
+        return
+
+    now = str(time.time())
+    name = "results/motifs_N_exc=" + str(N_exc) + "_N_inh=" + str(N_inh) + "_t=" + str(w_mon_exc.t[-1]) + "_" + now + ".png"
+    plt.savefig(name, dpi=300, bbox_inches='tight')
