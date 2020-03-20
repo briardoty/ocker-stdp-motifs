@@ -18,20 +18,20 @@ def compute_all_motif_stats_from_matrix(W_EE, W_II, W_EI, W_IE, N, p0):
     if not (p0):
         p0 = p
     
-    q_div_EE = sum(np.matmul(W_EE, W_EE.transpose())) / N**3 - p0**2
-    q_div_IEI = sum(np.matmul(W_EI, W_EI.transpose())) / N**3 - p0**2
-    q_div_EEI = sum(np.matmul(W_EI, W_EE.transpose())) / N**3 - p0**2 # 0
+    q_div_EE = sum(np.matmul(W_EE, W_EE.transpose())) / N**3 - p_EE**2 #p0**2
+    q_div_IEI = sum(np.matmul(W_EI, W_EI.transpose())) / N**3 - p_EI**2 # p0**2
+    q_div_EEI = sum(np.matmul(W_EI, W_EE.transpose())) / N**3 - p_EE*p_EI #p0**2 # 0
 
-    q_con_EE = sum(np.matmul(W_EE.transpose(), W_EE)) / N**3 - p0**2
-    q_con_EIE = sum(np.matmul(W_EI.transpose(), W_EI)) / N**3 - p0**2    
+    q_con_EE = sum(np.matmul(W_EE.transpose(), W_EE)) / N**3 - p_EE**2 #p0**2
+    q_con_EIE = sum(np.matmul(W_EI.transpose(), W_EI)) / N**3 - p_EI**2 #p0**2    
     q_con_EEI = sum(np.matmul(W_EE.transpose(), W_IE)) / N**3 - p0**2 # 0
     
-    q_ch_EE = sum(np.matmul(W_EE, W_EE))/ N**3 - p0**2
+    q_ch_EE = sum(np.matmul(W_EE, W_EE))/ N**3 - p_EE**2 #p0**2
     q_ch_IEE = sum(np.matmul(W_IE, W_EE))/ N**3 - p0**2
     q_ch_EIE = sum(np.matmul(W_EI, W_IE))/ N**3 - p0**2
-    q_ch_EEI = sum(np.matmul(W_EE, W_EI))/ N**3 - p0**2
+    q_ch_EEI = sum(np.matmul(W_EE, W_EI))/ N**3 - p_EE*p_EI #p0**2
     
-    q_rec_EE = sum(np.multiply(W_EE, W_EE.transpose())) / N**2 - p0**2 # Element wise
+    q_rec_EE = sum(np.multiply(W_EE, W_EE.transpose())) / N**2 - p_EE**2 #p0**2 # Element wise
     q_rec_EI = sum(np.multiply(W_EI, W_IE.transpose())) / N**2 - p0**2 # Element wise
 
     return (-p**2, p_EE, p_EI, q_div_EE, q_div_IEI, q_div_EEI, q_con_EE, q_con_EIE, q_con_EEI, q_ch_EE, 
